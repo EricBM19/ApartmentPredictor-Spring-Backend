@@ -62,7 +62,7 @@ public class Owner extends Person {
 }
 ```
 
-### Reviewer (1.0)
+### Reviewer (1.1)
 
 ```java
 @Entity
@@ -71,10 +71,13 @@ public class Reviewer extends Person{
     private String reviewerType;
     private int experienceYears;
     private double averageRating;
+
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }
 ```
 
-### Review (1.0)
+### Review (1.1)
 
 ```java
 @Entity
@@ -86,6 +89,11 @@ public class Review {
     private String reviewText;
     private int rating;
     private LocalDate reviewDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reviewer_id", nullable = false)
+    @JsonIgnore
+    private Reviewer reviewer;
 }
 ```
 
@@ -121,7 +129,7 @@ public class PropertyContract {
 }
 ```
 
-## UML (1.0)
+## UML (1.1)
 
 ```mermaid
 classDiagram
@@ -138,6 +146,9 @@ direction TB
 	    String reviewerType
 	    int experienceYears
 	    double averageRating
+		List<Review> reviews
+        void addReview(Review review)
+		void removeReview(Review review)
     }
 
     class Owner {
@@ -155,6 +166,7 @@ direction TB
 	    LocalDate reviewDate
 	    String apartmentId
 	    Long reviewerId
+		Reviewer reviewer
     }
 
     class Apartment {

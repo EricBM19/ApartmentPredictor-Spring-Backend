@@ -1,6 +1,9 @@
 package com.ebm.apartmentPredictor_Backend.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Reviewer extends Person{
@@ -8,6 +11,9 @@ public class Reviewer extends Person{
     private String reviewerType;
     private int experienceYears;
     private double averageRating;
+
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     public Reviewer() {
         super();
@@ -42,6 +48,20 @@ public class Reviewer extends Person{
 
     public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setReviewer(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        review.setReviewer(null);
     }
 
     @Override
