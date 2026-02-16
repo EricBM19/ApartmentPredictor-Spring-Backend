@@ -26,6 +26,9 @@ public class Apartment {
     private String prefarea;
     private String furnishingStatus;
 
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List <Review> reviews = new ArrayList<>();
+
     public Apartment() {
     }
 
@@ -161,6 +164,22 @@ public class Apartment {
     public void setFurnishingStatus(String furnishingStatus) {
         this.furnishingStatus = furnishingStatus;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setApartment(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        review.setApartment(null);
+    }
+
+
 
     @Override
     public String toString() {

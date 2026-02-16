@@ -11,7 +11,7 @@ import java.util.List;
 public class Review {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String reviewText;
     private int rating;
@@ -21,6 +21,11 @@ public class Review {
     @JoinColumn(name = "reviewer_id", nullable = false)
     @JsonIgnore
     private Reviewer reviewer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "apartment_id")
+    @JsonIgnore
+    private Apartment apartment;
 
     public Review() {
     }
@@ -66,6 +71,14 @@ public class Review {
 
     public void setReviewer(Reviewer reviewer) {
         this.reviewer = reviewer;
+    }
+
+    public Apartment getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
     }
 
     @Override

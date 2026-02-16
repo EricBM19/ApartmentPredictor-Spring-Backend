@@ -45,6 +45,7 @@ class ApartmentPredictorBackendApplicationTests {
         reviewerRepository.save(reviewer);
 
         Review review = new Review("7/10 too much water", 4, LocalDate.now(), reviewer);
+        review.setApartment(apartment);
         reviewRepository.save(review);
 
         PropertyContract propertyContract = new PropertyContract(LocalDate.now(), "PC1234", 123456L);
