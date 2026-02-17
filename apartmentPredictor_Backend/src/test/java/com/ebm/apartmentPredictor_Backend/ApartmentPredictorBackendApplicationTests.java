@@ -32,6 +32,9 @@ class ApartmentPredictorBackendApplicationTests {
     @Test
     void saveOneObjectPerClassTest() {
 
+        Apartment apartment = new Apartment(100000L,70,2,2,0,"yes","yes","no","yes","yes","yes", 1, "yes", "furnished");
+        apartmentRepository.save(apartment);
+
         School school = new School("Salesians", "Religious", "Badalona", 4, false);
         schoolRepository.save(school);
 
@@ -44,7 +47,6 @@ class ApartmentPredictorBackendApplicationTests {
         Review review = new Review("7/10 too much water", 4, LocalDate.now(), reviewer);
         Review review2 = new Review("Bad", 2, LocalDate.now(), reviewer);
 
-        Apartment apartment = new Apartment(100000L,70,2,2,0,"yes","yes","no","yes","yes","yes", 1, "yes", "furnished");
         apartment.addReview(review);
         apartment.addReview(review2);
         apartment.addSchool(school);

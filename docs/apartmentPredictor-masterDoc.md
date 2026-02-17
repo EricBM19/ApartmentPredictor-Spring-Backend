@@ -6,7 +6,7 @@ The main objective of this exercise is to create a RestController which would in
 
 ## Project classes
 
-### Apartment (1.0)
+### Apartment (1.1)
 
 ```java
 @Entity
@@ -29,6 +29,16 @@ public class Apartment {
     private int parking;
     private String prefarea;
     private String furnishingStatus;
+
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set <Review> reviews = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "apartment_school_joinTable",
+            joinColumns = @JoinColumn(name = "aparment_id"),
+            inverseJoinColumns = @JoinColumn(name = "school_id"))
+    private Set<School> schools = new HashSet<>();
 }
 ```
 
@@ -62,7 +72,7 @@ public class Owner extends Person {
 }
 ```
 
-### Reviewer (1.1)
+### Reviewer (1.2)
 
 ```java
 @Entity
@@ -73,18 +83,18 @@ public class Reviewer extends Person{
     private double averageRating;
 
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+    private Set<Review> reviews = new HashSet<>();
 }
 ```
 
-### Review (1.1)
+### Review (1.2)
 
 ```java
 @Entity
 public class Review {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String reviewText;
     private int rating;
@@ -94,10 +104,14 @@ public class Review {
     @JoinColumn(name = "reviewer_id", nullable = false)
     @JsonIgnore
     private Reviewer reviewer;
-}
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "apartment_id", nullable = false)
+    @JsonIgnore
+    private Apartment apartment;
 ```
 
-### School (1.0)
+### School (1.1)
 
 ```java
 @Entity
@@ -111,6 +125,9 @@ public class School {
     private String location;
     private int rating;
     private boolean publicSchool;
+
+    @ManyToMany (mappedBy = "schools")
+    private Set<Apartment> apartments = new HashSet<>();
 }
 ```
 
@@ -129,81 +146,91 @@ public class PropertyContract {
 }
 ```
 
-## UML (1.1)
+## UML (1.2)
 
 ```mermaid
 classDiagram
 direction TB
     class Person {
-	    Long id
-	    String name
-		String surname
-	    String email
-	    String age
+        Long id
+        String name
+        String surname
+        String email
+        String age
     }
 
     class Reviewer {
-	    String reviewerType
-	    int experienceYears
-	    double averageRating
-		List<Review> reviews
-        void addReview(Review review)
-		void removeReview(Review review)
+        String reviewerType
+        int experienceYears
+        double averageRating
+        Set <Review> reviews
+        void addReview(Review review)
+        void removeReview(Review review)
     }
 
     class Owner {
-	    boolean isActive
-	    boolean isBusiness
-	    String idLegalOwner
-	    LocalDate registrationDate
-	    int qtyDaysAsOwner
+        boolean isActive
+        boolean isBusiness
+        String idLegalOwner
+        LocalDate registrationDate
+        int qtyDaysAsOwner
     }
 
     class Review {
-	    Long id
-	    String reviewText
-	    int rating
-	    LocalDate reviewDate
-	    String apartmentId
-	    Long reviewerId
-		Reviewer reviewer
+        Long id
+        String reviewText
+        int rating
+        LocalDate reviewDate
+        String apartmentId
+        Long reviewerId
+        Reviewer reviewer
+        Apartment apartment
     }
 
     class Apartment {
-	    Long id
-	    Long price
-	    int area
-	    int bedrooms
-	    int bathrooms
-	    int stories
-	    String mainroad
-	    String guestroom
-	    String basement
-	    String hotwater
-	    String heating
-	    String airconditioning
-	    int parking
-	    String prefarea
-	    String furnishingStatus
+        Long id
+        Long price
+        int area
+        int bedrooms
+        int bathrooms
+        int stories
+        String mainroad
+        String guestroom
+        String basement
+        String hotwater
+        String heating
+        String airconditioning
+        int parking
+        String prefarea
+        String furnishingStatus
+        List <Review> reviews
+        Set <School> schools
+        void addReview(Review review)
+        void removeReview(Review review)
+        void addSchool(School school)
+        void removeSchool(School school)
     }
 
     class PropertyContract {
-		Long id
-		LocalDate contractDate
-		String registerNumberPropiertyContract
-		Long valueRealState
+        Long id
+        LocalDate contractDate
+        String registerNumberPropiertyContract
+        Long valueRealState
     }
 
     class School {
-	    Long id
-	    String name
-	    String type
-	    String location
-	    int rating
-	    boolean isPublic
+        Long id
+        String name
+        String type
+        String location
+        int rating
+        boolean isPublic
+        Set <Apartment> apartments
+        void addApartment(Apartment apartment)
+        void removeApartment(Apartment apartment)
     }
 
-	<<abstract>> Person
+    <<abstract>> Person
 
     Reviewer <|-- Person
     Owner <|-- Person
