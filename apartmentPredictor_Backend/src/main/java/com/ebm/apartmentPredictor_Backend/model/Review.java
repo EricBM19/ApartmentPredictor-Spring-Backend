@@ -23,7 +23,7 @@ public class Review {
     private Reviewer reviewer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "apartment_id")
+    @JoinColumn(name = "apartment_id", nullable = false)
     @JsonIgnore
     private Apartment apartment;
 

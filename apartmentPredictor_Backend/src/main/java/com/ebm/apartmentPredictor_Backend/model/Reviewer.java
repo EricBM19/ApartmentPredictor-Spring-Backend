@@ -3,7 +3,9 @@ package com.ebm.apartmentPredictor_Backend.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Reviewer extends Person{
@@ -13,7 +15,7 @@ public class Reviewer extends Person{
     private double averageRating;
 
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+    private Set<Review> reviews = new HashSet<>();
 
     public Reviewer() {
         super();
@@ -50,7 +52,7 @@ public class Reviewer extends Person{
         this.averageRating = averageRating;
     }
 
-    public List<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 

@@ -3,7 +3,9 @@ package com.ebm.apartmentPredictor_Backend.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Apartment {
@@ -27,7 +29,14 @@ public class Apartment {
     private String furnishingStatus;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List <Review> reviews = new ArrayList<>();
+    private Set <Review> reviews = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "apartment_school_joinTable",
+            joinColumns = @JoinColumn(name = "aparment_id"),
+            inverseJoinColumns = @JoinColumn(name = "school_id"))
+    private Set<School> schools = new HashSet<>();
 
     public Apartment() {
     }
@@ -165,7 +174,7 @@ public class Apartment {
         this.furnishingStatus = furnishingStatus;
     }
 
-    public List<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
@@ -179,7 +188,19 @@ public class Apartment {
         review.setApartment(null);
     }
 
+    public Set<School> getSchools() {
+        return schools;
+    }
 
+    public void addSchool(School school) {
+        schools.add(school);
+        school.getApartments().add(this);
+    }
+
+    public void removeSchool(School school) {
+        schools.remove(school);
+        school.getApartments().remove(this);
+    }
 
     @Override
     public String toString() {

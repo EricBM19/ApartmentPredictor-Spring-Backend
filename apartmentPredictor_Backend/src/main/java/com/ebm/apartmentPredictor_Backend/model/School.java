@@ -2,6 +2,11 @@ package com.ebm.apartmentPredictor_Backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 public class School {
 
@@ -13,6 +18,9 @@ public class School {
     private String location;
     private int rating;
     private boolean publicSchool;
+
+    @ManyToMany (mappedBy = "schools")
+    private Set<Apartment> apartments = new HashSet<>();
 
     public School() {
     }
@@ -67,6 +75,20 @@ public class School {
 
     public void setPublicSchool(boolean publicSchool) {
         this.publicSchool = publicSchool;
+    }
+
+    public Set<Apartment> getApartments() {
+        return apartments;
+    }
+
+    public void addApartment(Apartment apartment) {
+        apartments.add(apartment);
+        apartment.getSchools().add(this);
+    }
+
+    public void removeApartment(Apartment apartment) {
+        apartments.remove(apartment);
+        apartment.getSchools().remove(this);
     }
 
     @Override

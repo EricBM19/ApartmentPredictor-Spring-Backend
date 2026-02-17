@@ -35,9 +35,6 @@ class ApartmentPredictorBackendApplicationTests {
         School school = new School("Salesians", "Religious", "Badalona", 4, false);
         schoolRepository.save(school);
 
-        Apartment apartment = new Apartment(100000L,70,2,2,0,"yes","yes","no","yes","yes","yes", 1, "yes", "furnished");
-        apartmentRepository.save(apartment);
-
         Owner owner = new Owner("John", "Doe", "jdoe@email.com", 37, true, false, "own1234", LocalDate.now(), 1);
         ownerRepository.save(owner);
 
@@ -45,8 +42,13 @@ class ApartmentPredictorBackendApplicationTests {
         reviewerRepository.save(reviewer);
 
         Review review = new Review("7/10 too much water", 4, LocalDate.now(), reviewer);
-        review.setApartment(apartment);
-        reviewRepository.save(review);
+        Review review2 = new Review("Bad", 2, LocalDate.now(), reviewer);
+
+        Apartment apartment = new Apartment(100000L,70,2,2,0,"yes","yes","no","yes","yes","yes", 1, "yes", "furnished");
+        apartment.addReview(review);
+        apartment.addReview(review2);
+        apartment.addSchool(school);
+        apartmentRepository.save(apartment);
 
         PropertyContract propertyContract = new PropertyContract(LocalDate.now(), "PC1234", 123456L);
         propertyContractRepository.save(propertyContract);
