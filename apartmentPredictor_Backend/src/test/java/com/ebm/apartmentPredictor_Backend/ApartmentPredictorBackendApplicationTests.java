@@ -52,7 +52,7 @@ class ApartmentPredictorBackendApplicationTests {
         apartment.addSchool(school);
         apartmentRepository.save(apartment);
 
-        PropertyContract propertyContract = new PropertyContract(LocalDate.now(), "PC1234", 123456L);
+        PropertyContract propertyContract = new PropertyContract(LocalDate.now(), "PC1234", 123456L, apartment, owner);
         propertyContractRepository.save(propertyContract);
 
     }

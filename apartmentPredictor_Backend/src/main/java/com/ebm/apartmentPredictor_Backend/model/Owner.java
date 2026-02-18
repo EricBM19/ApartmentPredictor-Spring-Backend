@@ -1,8 +1,12 @@
 package com.ebm.apartmentPredictor_Backend.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Owner extends Person {
@@ -12,6 +16,9 @@ public class Owner extends Person {
     private String idLegalOwner;
     private LocalDate registrationDate;
     private int qtyDaysAsOwner;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Set<PropertyContract> propertyContracts = new HashSet<>();
 
     public Owner() {
         super();
@@ -64,6 +71,20 @@ public class Owner extends Person {
 
     public void setQtyDaysAsOwner(int qtyDaysAsOwner) {
         this.qtyDaysAsOwner = qtyDaysAsOwner;
+    }
+
+    public Set<PropertyContract> getPropertyContracts() {
+        return propertyContracts;
+    }
+
+    public void addContracts(PropertyContract propertyContract) {
+        propertyContracts.add(propertyContract);
+        propertyContract.setOwner(this);
+    }
+
+    public void removePropertyContract(PropertyContract propertyContract) {
+        propertyContracts.remove(propertyContract);
+        propertyContract.setOwner(null);
     }
 
     @Override

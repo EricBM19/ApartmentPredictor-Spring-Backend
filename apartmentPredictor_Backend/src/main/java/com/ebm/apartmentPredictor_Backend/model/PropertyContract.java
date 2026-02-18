@@ -1,9 +1,7 @@
 package com.ebm.apartmentPredictor_Backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -17,13 +15,24 @@ public class PropertyContract {
     private String registerNumberPropiertyContract;
     private Long valueRealState;
 
-    public PropertyContract() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "apartment_id")
+    @JsonIgnore
+    private Apartment apartment;
 
-    public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long valueRealState) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
+    private Owner owner;
+
+    public PropertyContract() {}
+
+    public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long valueRealState, Apartment apartment, Owner owner) {
         this.contractDate = contractDate;
         this.registerNumberPropiertyContract = registerNumberPropiertyContract;
         this.valueRealState = valueRealState;
+        this.apartment = apartment;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -54,6 +63,22 @@ public class PropertyContract {
         this.valueRealState = valueRealState;
     }
 
+    public Apartment getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "PropertyContract{" +
@@ -61,6 +86,8 @@ public class PropertyContract {
                 ", contractDate=" + contractDate +
                 ", registerNumberPropiertyContract='" + registerNumberPropiertyContract + '\'' +
                 ", valueRealState=" + valueRealState +
+                ", apartment=" + apartment +
+                ", owner=" + owner +
                 '}';
     }
 }

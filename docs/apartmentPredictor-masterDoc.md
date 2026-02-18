@@ -6,7 +6,7 @@ The main objective of this exercise is to create a RestController which would in
 
 ## Project classes
 
-### Apartment (1.1)
+### Apartment (1.2)
 
 ```java
 @Entity
@@ -33,6 +33,9 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
 
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)
+    private Set <PropertyContract> propertyContracts = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "apartment_school_joinTable",
@@ -58,7 +61,7 @@ public abstract class Person {
 }
 ```
 
-### Owner (1.0)
+### Owner (1.1)
 
 ```java
 @Entity
@@ -69,6 +72,9 @@ public class Owner extends Person {
     private String idLegalOwner;
     private LocalDate registrationDate;
     private int qtyDaysAsOwner;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Set<PropertyContract> propertyContracts = new HashSet<>();
 }
 ```
 
@@ -131,7 +137,7 @@ public class School {
 }
 ```
 
-### PropertyContract (1.0)
+### PropertyContract (1.1)
 
 ```java
 @Entity
@@ -143,10 +149,20 @@ public class PropertyContract {
     private LocalDate contractDate;
     private String registerNumberPropiertyContract;
     private Long valueRealState;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "apartment_id")
+    @JsonIgnore
+    private Apartment apartment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
+    private Owner owner;
 }
 ```
 
-## UML (1.2)
+## UML (1.3)
 
 ```mermaid
 classDiagram
@@ -174,6 +190,8 @@ direction TB
         String idLegalOwner
         LocalDate registrationDate
         int qtyDaysAsOwner
+        void addPropertyContract(PropertyContract propertyContract)
+        void removePropertyContract(PropertyContract propertyContract)
     }
 
     class Review {
@@ -209,6 +227,8 @@ direction TB
         void removeReview(Review review)
         void addSchool(School school)
         void removeSchool(School school)
+        void addPropertyContract(PropertyContract propertyContract)
+        void removePropertyContract(PropertyContract propertyContract)
     }
 
     class PropertyContract {
@@ -216,6 +236,8 @@ direction TB
         LocalDate contractDate
         String registerNumberPropiertyContract
         Long valueRealState
+        Apartment apartment
+        Owner owner
     }
 
     class School {
