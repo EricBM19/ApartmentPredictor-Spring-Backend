@@ -17,7 +17,7 @@ public class Owner extends Person {
     private LocalDate registrationDate;
     private int qtyDaysAsOwner;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PropertyContract> propertyContracts = new HashSet<>();
 
     public Owner() {

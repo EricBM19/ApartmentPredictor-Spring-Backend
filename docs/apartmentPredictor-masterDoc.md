@@ -168,88 +168,88 @@ public class PropertyContract {
 classDiagram
 direction TB
     class Person {
-        Long id
-        String name
-        String surname
-        String email
-        String age
+        -Long id
+        -String name
+        -String surname
+        -String email
+        -String age
     }
 
     class Reviewer {
-        String reviewerType
-        int experienceYears
-        double averageRating
-        Set <Review> reviews
-        void addReview(Review review)
-        void removeReview(Review review)
+        -String reviewerType
+        -int experienceYears
+        -double averageRating
+        -Set <Review> reviews
+        -void addReview(Review review)
+        -void removeReview(Review review)
     }
 
     class Owner {
-        boolean isActive
-        boolean isBusiness
-        String idLegalOwner
-        LocalDate registrationDate
-        int qtyDaysAsOwner
-        void addPropertyContract(PropertyContract propertyContract)
-        void removePropertyContract(PropertyContract propertyContract)
+        -boolean isActive
+        -boolean isBusiness
+        -String idLegalOwner
+        -LocalDate registrationDate
+        -int qtyDaysAsOwner
+        -void addPropertyContract(PropertyContract propertyContract)
+        -void removePropertyContract(PropertyContract propertyContract)
     }
 
     class Review {
-        Long id
-        String reviewText
-        int rating
-        LocalDate reviewDate
-        String apartmentId
-        Long reviewerId
-        Reviewer reviewer
-        Apartment apartment
+        -Long id
+        -String reviewText
+        -int rating
+        -LocalDate reviewDate
+        -String apartmentId
+        -Long reviewerId
+        -Reviewer reviewer
+        -Apartment apartment
     }
 
     class Apartment {
-        Long id
-        Long price
-        int area
-        int bedrooms
-        int bathrooms
-        int stories
-        String mainroad
-        String guestroom
-        String basement
-        String hotwater
-        String heating
-        String airconditioning
-        int parking
-        String prefarea
-        String furnishingStatus
-        List <Review> reviews
-        Set <School> schools
-        void addReview(Review review)
-        void removeReview(Review review)
-        void addSchool(School school)
-        void removeSchool(School school)
-        void addPropertyContract(PropertyContract propertyContract)
-        void removePropertyContract(PropertyContract propertyContract)
+        -Long id
+        -Long price
+        -int area
+        -int bedrooms
+        -int bathrooms
+        -int stories
+        -String mainroad
+        -String guestroom
+        -String basement
+        -String hotwater
+        -String heating
+        -String airconditioning
+        -int parking
+        -String prefarea
+        -String furnishingStatus
+        -List <Review> reviews
+        -Set <School> schools
+        -void addReview(Review review)
+        -void removeReview(Review review)
+        -void addSchool(School school)
+        -void removeSchool(School school)
+        -void addPropertyContract(PropertyContract propertyContract)
+        -void removePropertyContract(PropertyContract propertyContract)
     }
 
     class PropertyContract {
-        Long id
-        LocalDate contractDate
-        String registerNumberPropiertyContract
-        Long valueRealState
-        Apartment apartment
-        Owner owner
+        -Long id
+        -LocalDate contractDate
+        -String registerNumberPropiertyContract
+        -Long valueRealState
+        -Apartment apartment
+        -Owner owner
     }
 
     class School {
-        Long id
-        String name
-        String type
-        String location
-        int rating
-        boolean isPublic
-        Set <Apartment> apartments
-        void addApartment(Apartment apartment)
-        void removeApartment(Apartment apartment)
+        -Long id
+        -String name
+        -String type
+        -String location
+        -int rating
+        -boolean isPublic
+        -Set <Apartment> apartments
+        -void addApartment(Apartment apartment)
+        -void removeApartment(Apartment apartment)
     }
 
     <<abstract>> Person

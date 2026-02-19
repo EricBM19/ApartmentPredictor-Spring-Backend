@@ -12,7 +12,7 @@ public class PropertyContract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate contractDate;
-    private String registerNumberPropiertyContract;
+    private String registerNumberPropertyContract;
     private Long valueRealState;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +29,7 @@ public class PropertyContract {
 
     public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long valueRealState, Apartment apartment, Owner owner) {
         this.contractDate = contractDate;
-        this.registerNumberPropiertyContract = registerNumberPropiertyContract;
+        this.registerNumberPropertyContract = registerNumberPropiertyContract;
         this.valueRealState = valueRealState;
         this.apartment = apartment;
         this.owner = owner;
@@ -47,12 +47,12 @@ public class PropertyContract {
         this.contractDate = contractDate;
     }
 
-    public String getRegisterNumberPropiertyContract() {
-        return registerNumberPropiertyContract;
+    public String getRegisterNumberPropertyContract() {
+        return registerNumberPropertyContract;
     }
 
-    public void setRegisterNumberPropiertyContract(String registerNumberPropiertyContract) {
-        this.registerNumberPropiertyContract = registerNumberPropiertyContract;
+    public void setRegisterNumberPropertyContract(String registerNumberPropertyContract) {
+        this.registerNumberPropertyContract = registerNumberPropertyContract;
     }
 
     public Long getValueRealState() {
@@ -84,7 +84,7 @@ public class PropertyContract {
         return "PropertyContract{" +
                 "id=" + id +
                 ", contractDate=" + contractDate +
-                ", registerNumberPropiertyContract='" + registerNumberPropiertyContract + '\'' +
+                ", registerNumberPropiertyContract='" + registerNumberPropertyContract + '\'' +
                 ", valueRealState=" + valueRealState +
                 ", apartment=" + apartment +
                 ", owner=" + owner +

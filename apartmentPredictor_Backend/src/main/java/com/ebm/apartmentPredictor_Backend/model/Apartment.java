@@ -29,13 +29,13 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <PropertyContract> propertyContracts = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
             name = "apartment_school_joinTable",
-            joinColumns = @JoinColumn(name = "aparment_id"),
+            joinColumns = @JoinColumn(name = "apartment_id"),
             inverseJoinColumns = @JoinColumn(name = "school_id"))
     private Set<School> schools = new HashSet<>();
 
