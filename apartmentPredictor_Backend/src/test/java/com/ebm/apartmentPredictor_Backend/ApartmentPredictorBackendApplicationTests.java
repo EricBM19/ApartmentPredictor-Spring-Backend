@@ -38,7 +38,7 @@ class ApartmentPredictorBackendApplicationTests {
         School school = new School("Salesians", "Religious", "Badalona", 4, false);
         schoolRepository.save(school);
 
-        Owner owner = new Owner("John", "Doe", "jdoe@email.com", 37, true, false, "own1234", LocalDate.now(), 1);
+        Owner owner = new Owner("John", "Doe", "jdoe@email.com", 37, true, false, "own1234", LocalDate.now());
         ownerRepository.save(owner);
 
         Reviewer reviewer = new Reviewer("Jane", "Doe", "janed@email.com", 35, "New", 0, 4.0);

@@ -19,7 +19,7 @@ public class School {
     private int rating;
     private boolean publicSchool;
 
-    @ManyToMany (mappedBy = "schools")
+    @ManyToMany (mappedBy = "schools", fetch = FetchType.EAGER)
     private Set<Apartment> apartments = new HashSet<>();
 
     public School() {

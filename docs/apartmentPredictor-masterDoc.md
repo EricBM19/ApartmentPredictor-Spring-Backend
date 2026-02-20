@@ -61,7 +61,7 @@ public abstract class Person {
 }
 ```
 
-### Owner (1.1)
+### Owner (1.2)
 
 ```java
 @Entity
@@ -71,7 +71,6 @@ public class Owner extends Person {
     private boolean isBusiness;
     private String idLegalOwner;
     private LocalDate registrationDate;
-    private int qtyDaysAsOwner;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<PropertyContract> propertyContracts = new HashSet<>();
@@ -162,7 +161,7 @@ public class PropertyContract {
 }
 ```
 
-## UML (1.3)
+## UML (1.4)
 
 ```mermaid
 classDiagram
@@ -189,7 +188,6 @@ direction TB
         -boolean isBusiness
         -String idLegalOwner
         -LocalDate registrationDate
-        -int qtyDaysAsOwner
         -void addPropertyContract(PropertyContract propertyContract)
         -void removePropertyContract(PropertyContract propertyContract)
     }

@@ -32,7 +32,7 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <PropertyContract> propertyContracts = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "apartment_school_joinTable",
             joinColumns = @JoinColumn(name = "apartment_id"),

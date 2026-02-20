@@ -17,9 +17,11 @@ public class SchoolPopulator {
     @Autowired
     SchoolRepository schoolRepository;
 
-    public void populateSchool (int quantity) {
+    public List<School> populateSchool (int quantity) {
         List<School> schools = generateSchools(quantity);
         schoolRepository.saveAll(schools);
+
+        return schools;
     }
 
     private List<School> generateSchools (int quantity) {

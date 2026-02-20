@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class OwnerPopulator {
@@ -17,8 +19,11 @@ public class OwnerPopulator {
     @Autowired
     OwnerRepository ownerRepository;
 
-    public void populateOwner(int quantity) {
+    public List<Owner> populateOwner(int quantity) {
+        List<Owner> owners = generateOwner(quantity);
+        ownerRepository.saveAll(owners);
 
+        return owners;
     }
 
     private List<Owner> generateOwner (int quantity) {
@@ -34,6 +39,11 @@ public class OwnerPopulator {
             owner.setActive(faker.bool().bool());
             owner.setBusiness(faker.bool().bool());
             owner.setIdLegalOwner(faker.idNumber().valid());
+            Date date = faker.date().past(3650, TimeUnit.DAYS);
+            LocalDate registrationDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            owner.setRegistrationDate(registrationDate);
+
+            generatedOwners.add(owner);
         }
 
         return generatedOwners;

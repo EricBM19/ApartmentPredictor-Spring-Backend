@@ -15,7 +15,6 @@ public class Owner extends Person {
     private boolean isBusiness;
     private String idLegalOwner;
     private LocalDate registrationDate;
-    private int qtyDaysAsOwner;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PropertyContract> propertyContracts = new HashSet<>();
@@ -24,13 +23,12 @@ public class Owner extends Person {
         super();
     }
 
-    public Owner(String name, String surname, String email, int age, boolean isActive, boolean isBusiness, String idLegalOwner, LocalDate registrationDate, int qtyDaysAsOwner) {
+    public Owner(String name, String surname, String email, int age, boolean isActive, boolean isBusiness, String idLegalOwner, LocalDate registrationDate) {
         super(name, surname, email, age);
         this.isActive = isActive;
         this.isBusiness = isBusiness;
         this.idLegalOwner = idLegalOwner;
         this.registrationDate = registrationDate;
-        this.qtyDaysAsOwner = qtyDaysAsOwner;
     }
 
     public boolean isActive() {
@@ -65,14 +63,6 @@ public class Owner extends Person {
         this.registrationDate = registrationDate;
     }
 
-    public int getQtyDaysAsOwner() {
-        return qtyDaysAsOwner;
-    }
-
-    public void setQtyDaysAsOwner(int qtyDaysAsOwner) {
-        this.qtyDaysAsOwner = qtyDaysAsOwner;
-    }
-
     public Set<PropertyContract> getPropertyContracts() {
         return propertyContracts;
     }
@@ -95,7 +85,6 @@ public class Owner extends Person {
                 ", isBusiness=" + isBusiness +
                 ", idLegalOwner='" + idLegalOwner + '\'' +
                 ", registrationDate=" + registrationDate +
-                ", qtyDaysAsOwner=" + qtyDaysAsOwner +
                 '}';
     }
 }

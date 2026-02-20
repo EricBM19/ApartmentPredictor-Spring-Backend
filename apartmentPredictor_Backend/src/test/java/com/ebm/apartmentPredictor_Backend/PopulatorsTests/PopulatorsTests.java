@@ -1,10 +1,16 @@
 package com.ebm.apartmentPredictor_Backend.PopulatorsTests;
 
-import com.ebm.apartmentPredictor_Backend.utils.ReviewerPopulator;
-import com.ebm.apartmentPredictor_Backend.utils.SchoolPopulator;
+import com.ebm.apartmentPredictor_Backend.model.Apartment;
+import com.ebm.apartmentPredictor_Backend.model.Owner;
+import com.ebm.apartmentPredictor_Backend.model.Reviewer;
+import com.ebm.apartmentPredictor_Backend.model.School;
+import com.ebm.apartmentPredictor_Backend.repository.OwnerRepository;
+import com.ebm.apartmentPredictor_Backend.utils.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class PopulatorsTests {
@@ -15,11 +21,23 @@ public class PopulatorsTests {
     @Autowired
     ReviewerPopulator reviewerPopulator;
 
+    @Autowired
+    OwnerPopulator ownerPopulator;
+
+    @Autowired
+    PlainApartmentPopulator plainApartmentPopulator;
+
+    @Autowired
+    ApartmentSchoolRelationPopulator apartmentSchoolRelationPopulator;
+
     @Test
-    void populateAll() {
-        int qty = 10;
-        schoolPopulator.populateSchool(qty);
-        reviewerPopulator.populateReviewer(qty);
+    void populateAndAssignAll() {
+        int qty = 20;
+        List<School> schools = schoolPopulator.populateSchool(qty);
+        List<Reviewer> reviewers = reviewerPopulator.populateReviewer(qty);
+        List<Owner> owners = ownerPopulator.populateOwner(qty);
+        List<Apartment> plainApartments = plainApartmentPopulator.populatePlainApartments(qty);
+        apartmentSchoolRelationPopulator.assignSchoolsToApartments(plainApartments,schools);
     }
 
     @Test
@@ -30,5 +48,15 @@ public class PopulatorsTests {
     @Test
     void testReviewerPopulator() {
         reviewerPopulator.populateReviewer(10);
+    }
+
+    @Test
+    void testOwnerPopulator() {
+        ownerPopulator.populateOwner(10);
+    }
+
+    @Test
+    void testPlainApartmentPopulator() {
+        plainApartmentPopulator.populatePlainApartments(10);
     }
 }

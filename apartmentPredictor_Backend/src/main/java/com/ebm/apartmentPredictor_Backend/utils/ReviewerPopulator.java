@@ -15,9 +15,11 @@ public class ReviewerPopulator {
     @Autowired
     ReviewerRepository reviewerRepository;
 
-    public void populateReviewer(int quantity) {
+        public List<Reviewer> populateReviewer(int quantity) {
         List<Reviewer> reviewers = generateReviewers(quantity);
         reviewerRepository.saveAll(reviewers);
+
+        return reviewers;
     }
 
     private List<Reviewer> generateReviewers (int quantity) {
