@@ -38,6 +38,12 @@ public class PopulatorsTests {
     @Autowired
     ReviewerRepository reviewerRepository;
 
+    @Autowired
+    PropertyContractPopulator propertyContractPopulator;
+
+    @Autowired
+    OwnerRepository ownerRepository;
+
     @Test
     void populateAndAssignAll() {
         int qty = 20;
@@ -47,6 +53,7 @@ public class PopulatorsTests {
         List<Apartment> plainApartments = plainApartmentPopulator.populatePlainApartments(qty);
         apartmentSchoolRelationPopulator.assignSchoolsToApartments(plainApartments,schools);
         List<Review> reviews = reviewPopulator.populateReviews(qty, reviewers, plainApartments);
+        List<PropertyContract> propertyContracts = propertyContractPopulator.populatePropertyContracts(qty, plainApartments, owners);
     }
 
     @Test
@@ -74,5 +81,12 @@ public class PopulatorsTests {
         List<Reviewer> reviewers = (List<Reviewer>) reviewerRepository.findAll();
         List<Apartment> apartments = (List<Apartment>) apartmentRepository.findAll();
         reviewPopulator.populateReviews(10, reviewers, apartments);
+    }
+
+    @Test
+    void testPropertyContractPopulator() {
+        List<Apartment> apartments = (List<Apartment>) apartmentRepository.findAll();
+        List<Owner> owners = (List<Owner>) ownerRepository.findAll();
+        propertyContractPopulator.populatePropertyContracts(10, apartments, owners);
     }
 }

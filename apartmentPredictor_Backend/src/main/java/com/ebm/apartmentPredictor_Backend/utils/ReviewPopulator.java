@@ -51,7 +51,6 @@ public class ReviewPopulator {
     private void assignReviewer(Faker faker, List<Reviewer> reviewers, Review review) {
         Reviewer reviewer = reviewers.get(faker.number().numberBetween(0, reviewers.size()));
         reviewer.addReview(review);
-
     }
 
     private void assignApartment (Faker faker, List<Apartment> apartments, Review review) {

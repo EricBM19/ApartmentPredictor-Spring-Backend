@@ -13,7 +13,7 @@ public class PropertyContract {
     private Long id;
     private LocalDate contractDate;
     private String registerNumberPropertyContract;
-    private Long valueRealState;
+    private Long propertyValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartment_id")
@@ -27,10 +27,10 @@ public class PropertyContract {
 
     public PropertyContract() {}
 
-    public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long valueRealState, Apartment apartment, Owner owner) {
+    public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long propertyValue, Apartment apartment, Owner owner) {
         this.contractDate = contractDate;
         this.registerNumberPropertyContract = registerNumberPropiertyContract;
-        this.valueRealState = valueRealState;
+        this.propertyValue = propertyValue;
         this.apartment = apartment;
         this.owner = owner;
     }
@@ -55,12 +55,12 @@ public class PropertyContract {
         this.registerNumberPropertyContract = registerNumberPropertyContract;
     }
 
-    public Long getValueRealState() {
-        return valueRealState;
+    public Long getPropertyValue() {
+        return propertyValue;
     }
 
-    public void setValueRealState(Long valueRealState) {
-        this.valueRealState = valueRealState;
+    public void setPropertyValue(Long propertyValue) {
+        this.propertyValue = propertyValue;
     }
 
     public Apartment getApartment() {
@@ -85,7 +85,7 @@ public class PropertyContract {
                 "id=" + id +
                 ", contractDate=" + contractDate +
                 ", registerNumberPropiertyContract='" + registerNumberPropertyContract + '\'' +
-                ", valueRealState=" + valueRealState +
+                ", valueRealState=" + propertyValue +
                 ", apartment=" + apartment +
                 ", owner=" + owner +
                 '}';
