@@ -3,7 +3,6 @@ package com.ebm.apartmentPredictor_Backend.utils;
 import com.ebm.apartmentPredictor_Backend.model.Apartment;
 import com.ebm.apartmentPredictor_Backend.model.School;
 import com.ebm.apartmentPredictor_Backend.repository.ApartmentRepository;
-import com.ebm.apartmentPredictor_Backend.repository.SchoolRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

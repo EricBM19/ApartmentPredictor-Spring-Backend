@@ -1,10 +1,9 @@
 package com.ebm.apartmentPredictor_Backend.PopulatorsTests;
 
-import com.ebm.apartmentPredictor_Backend.model.Apartment;
-import com.ebm.apartmentPredictor_Backend.model.Owner;
-import com.ebm.apartmentPredictor_Backend.model.Reviewer;
-import com.ebm.apartmentPredictor_Backend.model.School;
+import com.ebm.apartmentPredictor_Backend.model.*;
+import com.ebm.apartmentPredictor_Backend.repository.ApartmentRepository;
 import com.ebm.apartmentPredictor_Backend.repository.OwnerRepository;
+import com.ebm.apartmentPredictor_Backend.repository.ReviewerRepository;
 import com.ebm.apartmentPredictor_Backend.utils.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,9 @@ import java.util.List;
 
 @SpringBootTest
 public class PopulatorsTests {
+
+    @Autowired
+    ApartmentRepository apartmentRepository;
 
     @Autowired
     SchoolPopulator schoolPopulator;
@@ -30,6 +32,12 @@ public class PopulatorsTests {
     @Autowired
     ApartmentSchoolRelationPopulator apartmentSchoolRelationPopulator;
 
+    @Autowired
+    ReviewPopulator reviewPopulator;
+
+    @Autowired
+    ReviewerRepository reviewerRepository;
+
     @Test
     void populateAndAssignAll() {
         int qty = 20;
@@ -38,6 +46,7 @@ public class PopulatorsTests {
         List<Owner> owners = ownerPopulator.populateOwner(qty);
         List<Apartment> plainApartments = plainApartmentPopulator.populatePlainApartments(qty);
         apartmentSchoolRelationPopulator.assignSchoolsToApartments(plainApartments,schools);
+        List<Review> reviews = reviewPopulator.populateReviews(qty, reviewers, plainApartments);
     }
 
     @Test
@@ -58,5 +67,12 @@ public class PopulatorsTests {
     @Test
     void testPlainApartmentPopulator() {
         plainApartmentPopulator.populatePlainApartments(10);
+    }
+
+    @Test
+    void testReviewPopulator() {
+        List<Reviewer> reviewers = (List<Reviewer>) reviewerRepository.findAll();
+        List<Apartment> apartments = (List<Apartment>) apartmentRepository.findAll();
+        reviewPopulator.populateReviews(10, reviewers, apartments);
     }
 }

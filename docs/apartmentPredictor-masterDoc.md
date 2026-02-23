@@ -198,7 +198,6 @@ direction TB
         -int rating
         -LocalDate reviewDate
         -String apartmentId
-        -Long reviewerId
         -Reviewer reviewer
         -Apartment apartment
     }

@@ -2,9 +2,7 @@ package com.ebm.apartmentPredictor_Backend.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +17,7 @@ public class School {
     private int rating;
     private boolean publicSchool;
 
-    @ManyToMany (mappedBy = "schools", fetch = FetchType.EAGER)
+    @ManyToMany (mappedBy = "schools", fetch = FetchType.LAZY)
     private Set<Apartment> apartments = new HashSet<>();
 
     public School() {
