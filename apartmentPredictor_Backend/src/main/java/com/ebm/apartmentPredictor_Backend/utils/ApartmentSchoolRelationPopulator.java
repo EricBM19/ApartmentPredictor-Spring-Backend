@@ -16,7 +16,7 @@ public class ApartmentSchoolRelationPopulator {
     @Autowired
     ApartmentRepository apartmentRepository;
 
-    public void assignSchoolsToApartments(List<Apartment> apartments, List<School> schools) {
+    public List<Apartment> assignSchoolsToApartments(List<Apartment> apartments, List<School> schools) {
         Faker faker = new Faker();
         Random random = new Random();
 
@@ -28,5 +28,7 @@ public class ApartmentSchoolRelationPopulator {
             }
             apartmentRepository.save(apartment);
         }
+
+        return apartments;
     }
 }

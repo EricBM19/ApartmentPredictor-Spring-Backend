@@ -27,9 +27,9 @@ public class PropertyContract {
 
     public PropertyContract() {}
 
-    public PropertyContract(LocalDate contractDate, String registerNumberPropiertyContract, Long propertyValue, Apartment apartment, Owner owner) {
+    public PropertyContract(LocalDate contractDate, String registerNumberPropertyContract, Long propertyValue, Apartment apartment, Owner owner) {
         this.contractDate = contractDate;
-        this.registerNumberPropertyContract = registerNumberPropiertyContract;
+        this.registerNumberPropertyContract = registerNumberPropertyContract;
         this.propertyValue = propertyValue;
         this.apartment = apartment;
         this.owner = owner;
