@@ -2,9 +2,112 @@
 
 ## Product Goal
 
-The main objective of this exercise is to create a RestController which would include a method that populates all database tables, including each assignment.
+The current goal of this project is to provide a REST endpoint that allows developers to automatically populate the database with realistic test data, including all related entities and their associations.
 
-## Project classes
+The user can specify a numeric parameter representing the desired amount of generated data, enabling fast and consistent setup of the application for development and testing purposes.
+
+## UML
+
+```mermaid
+classDiagram
+direction TB
+    class Person {
+        -Long id
+        -String name
+        -String surname
+        -String email
+        -String age
+    }
+
+    class Reviewer {
+        -String reviewerType
+        -int experienceYears
+        -double averageRating
+        -Set <Review> reviews
+        -void addReview(Review review)
+        -void removeReview(Review review)
+    }
+
+    class Owner {
+        -boolean isActive
+        -boolean isBusiness
+        -String idLegalOwner
+        -LocalDate registrationDate
+        -Set <PropertyContract> propertyContracts
+        -void addPropertyContract(PropertyContract propertyContract)
+        -void removePropertyContract(PropertyContract propertyContract)
+    }
+
+    class Review {
+        -Long id
+        -String reviewText
+        -int rating
+        -LocalDate reviewDate
+        -String apartmentId
+        -Reviewer reviewer
+        -Apartment apartment
+    }
+
+    class Apartment {
+        -Long id
+        -Long price
+        -int area
+        -int bedrooms
+        -int bathrooms
+        -int stories
+        -String mainroad
+        -String guestroom
+        -String basement
+        -String hotwater
+        -String heating
+        -String airconditioning
+        -int parking
+        -String prefarea
+        -String furnishingStatus
+        -List <Review> reviews
+        -Set <School> schools
+        -Set <PropertyContract> propertyContracts
+        -void addReview(Review review)
+        -void removeReview(Review review)
+        -void addSchool(School school)
+        -void removeSchool(School school)
+        -void addPropertyContract(PropertyContract propertyContract)
+        -void removePropertyContract(PropertyContract propertyContract)
+    }
+
+    class PropertyContract {
+        -Long id
+        -LocalDate contractDate
+        -String registerNumberPropiertyContract
+        -Long propertyValue
+        -Apartment apartment
+        -Owner owner
+    }
+
+    class School {
+        -Long id
+        -String name
+        -String type
+        -String location
+        -int rating
+        -boolean isPublic
+        -Set <Apartment> apartments
+        -void addApartment(Apartment apartment)
+        -void removeApartment(Apartment apartment)
+    }
+
+    <<abstract>> Person
+
+    Reviewer <|-- Person
+    Owner <|-- Person
+    Reviewer "1" --> "*" Review : writes
+    Apartment "1" --> "*" Review
+    Apartment "1" --> "*" PropertyContract
+    Owner "1" --> "*" PropertyContract
+    Apartment "*" --> "*" School : nearby
+```
+
+## ApartmentPredictor-Spring-Backend Entities
 
 ### Apartment (1.2)
 
@@ -161,103 +264,32 @@ public class PropertyContract {
 }
 ```
 
-## UML (1.4)
+## ApartmentPredictor-Spring-Backend RestController
 
-```mermaid
-classDiagram
-direction TB
-    class Person {
-        -Long id
-        -String name
-        -String surname
-        -String email
-        -String age
+### PopulateDBController
+
+```java
+@RestController
+@RequestMapping("/api/v1/")
+public class PopulateDBController {
+
+    @Autowired
+    PopulateDB populateDB;
+
+    @PostMapping("/populate")
+    public String populateDB (@RequestParam int quantity) {
+        populateDB.populateAll(quantity);
+        return "DataBase populated with " + quantity + " objects per entity.";
     }
-
-    class Reviewer {
-        -String reviewerType
-        -int experienceYears
-        -double averageRating
-        -Set <Review> reviews
-        -void addReview(Review review)
-        -void removeReview(Review review)
-    }
-
-    class Owner {
-        -boolean isActive
-        -boolean isBusiness
-        -String idLegalOwner
-        -LocalDate registrationDate
-        -Set <PropertyContract> propertyContracts
-        -void addPropertyContract(PropertyContract propertyContract)
-        -void removePropertyContract(PropertyContract propertyContract)
-    }
-
-    class Review {
-        -Long id
-        -String reviewText
-        -int rating
-        -LocalDate reviewDate
-        -String apartmentId
-        -Reviewer reviewer
-        -Apartment apartment
-    }
-
-    class Apartment {
-        -Long id
-        -Long price
-        -int area
-        -int bedrooms
-        -int bathrooms
-        -int stories
-        -String mainroad
-        -String guestroom
-        -String basement
-        -String hotwater
-        -String heating
-        -String airconditioning
-        -int parking
-        -String prefarea
-        -String furnishingStatus
-        -List <Review> reviews
-        -Set <School> schools
-        -Set <PropertyContract> propertyContracts
-        -void addReview(Review review)
-        -void removeReview(Review review)
-        -void addSchool(School school)
-        -void removeSchool(School school)
-        -void addPropertyContract(PropertyContract propertyContract)
-        -void removePropertyContract(PropertyContract propertyContract)
-    }
-
-    class PropertyContract {
-        -Long id
-        -LocalDate contractDate
-        -String registerNumberPropiertyContract
-        -Long propertyValue
-        -Apartment apartment
-        -Owner owner
-    }
-
-    class School {
-        -Long id
-        -String name
-        -String type
-        -String location
-        -int rating
-        -boolean isPublic
-        -Set <Apartment> apartments
-        -void addApartment(Apartment apartment)
-        -void removeApartment(Apartment apartment)
-    }
-
-    <<abstract>> Person
-
-    Reviewer <|-- Person
-    Owner <|-- Person
-    Reviewer "1" --> "*" Review : writes
-    Apartment "1" --> "*" Review
-    Apartment "1" --> "*" PropertyContract
-    Owner "1" --> "*" PropertyContract
-    Apartment "*" --> "*" School : nearby
+}
 ```
+
+## To Do List (Future implementations)
+
+- Implement service classes for business logic
+
+- Add additional RestControllers per entity
+
+- Implement defensive programming practices
+
+- Explore more JPA inheritance strategies
