@@ -136,7 +136,7 @@ public class School {
 }
 ```
 
-### PropertyContract (1.1)
+### PropertyContract (1.2)
 
 ```java
 @Entity
@@ -146,8 +146,8 @@ public class PropertyContract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate contractDate;
-    private String registerNumberPropiertyContract;
-    private Long valueRealState;
+    private String registerNumberPropertyContract;
+    private Long propertyValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartment_id")
@@ -188,6 +188,7 @@ direction TB
         -boolean isBusiness
         -String idLegalOwner
         -LocalDate registrationDate
+        -Set <PropertyContract> propertyContracts
         -void addPropertyContract(PropertyContract propertyContract)
         -void removePropertyContract(PropertyContract propertyContract)
     }
@@ -220,6 +221,7 @@ direction TB
         -String furnishingStatus
         -List <Review> reviews
         -Set <School> schools
+        -Set <PropertyContract> propertyContracts
         -void addReview(Review review)
         -void removeReview(Review review)
         -void addSchool(School school)
@@ -232,7 +234,7 @@ direction TB
         -Long id
         -LocalDate contractDate
         -String registerNumberPropiertyContract
-        -Long valueRealState
+        -Long propertyValue
         -Apartment apartment
         -Owner owner
     }
