@@ -22,7 +22,9 @@ public class PropertyContractPopulator {
     PropertyContractRepository propertyContractRepository;
 
     public List<PropertyContract> populatePropertyContracts (int quantity, List<Apartment> apartments, List<Owner> owners) {
+        if (quantity <= 0) throw new IllegalArgumentException ("Quantity must be greater than zero");
         List<PropertyContract> propertyContracts = generatePropertyContracts(quantity, apartments, owners);
+        if (propertyContracts.isEmpty()) throw new IllegalStateException("No PropertyContract items were created.");
         propertyContractRepository.saveAll(propertyContracts);
 
         return propertyContracts;

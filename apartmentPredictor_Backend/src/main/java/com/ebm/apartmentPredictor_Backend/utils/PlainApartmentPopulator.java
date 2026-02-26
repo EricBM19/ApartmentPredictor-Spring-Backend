@@ -17,7 +17,9 @@ public class PlainApartmentPopulator {
 
     public List<Apartment> populatePlainApartments (int quantity) {
 
+        if (quantity <= 0) throw new IllegalArgumentException ("Quantity must be greater than zero");
         List<Apartment> plainApartments = generatePlainApartments(quantity);
+        if (plainApartments.isEmpty()) throw new IllegalStateException("No PlainApartment items were created.");
         apartmentRepository.saveAll(plainApartments);
 
         return plainApartments;

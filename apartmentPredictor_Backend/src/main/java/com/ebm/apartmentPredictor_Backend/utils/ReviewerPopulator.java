@@ -15,8 +15,10 @@ public class ReviewerPopulator {
     @Autowired
     ReviewerRepository reviewerRepository;
 
-        public List<Reviewer> populateReviewer(int quantity) {
+    public List<Reviewer> populateReviewer(int quantity) {
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be greater than zero");
         List<Reviewer> reviewers = generateReviewers(quantity);
+        if (reviewers.isEmpty()) throw new IllegalStateException("No Reviewer items were created.");
         reviewerRepository.saveAll(reviewers);
 
         return reviewers;

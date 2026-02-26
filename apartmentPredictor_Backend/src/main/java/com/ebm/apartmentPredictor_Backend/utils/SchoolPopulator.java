@@ -18,7 +18,9 @@ public class SchoolPopulator {
     SchoolRepository schoolRepository;
 
     public List<School> populateSchool (int quantity) {
+        if (quantity <= 0) throw new IllegalArgumentException ("Quantity must be greater than zero.");
         List<School> schools = generateSchools(quantity);
+        if (schools.isEmpty()) throw new IllegalStateException("No School items were created.");
         schoolRepository.saveAll(schools);
 
         return schools;

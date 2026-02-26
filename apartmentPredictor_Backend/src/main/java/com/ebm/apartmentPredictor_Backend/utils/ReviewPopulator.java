@@ -22,7 +22,9 @@ public class ReviewPopulator {
     ReviewRepository reviewRepository;
 
     public List<Review> populateReviews (int quantity, List<Reviewer> reviewers, List<Apartment> apartments) {
+        if (quantity <= 0) throw new IllegalArgumentException ("Quantity must be greater than zero");
         List<Review> reviews = generateReviews(quantity, reviewers, apartments);
+        if (reviews.isEmpty()) throw new IllegalStateException("No Review items were created.");
         reviewRepository.saveAll(reviews);
 
         return reviews;

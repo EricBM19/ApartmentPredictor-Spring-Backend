@@ -20,7 +20,9 @@ public class OwnerPopulator {
     OwnerRepository ownerRepository;
 
     public List<Owner> populateOwner(int quantity) {
+        if (quantity <= 0) throw new IllegalArgumentException ("Quantity must be greater than zero");
         List<Owner> owners = generateOwner(quantity);
+        if (owners.isEmpty()) throw new IllegalStateException("No Owner items were created.");
         ownerRepository.saveAll(owners);
 
         return owners;
