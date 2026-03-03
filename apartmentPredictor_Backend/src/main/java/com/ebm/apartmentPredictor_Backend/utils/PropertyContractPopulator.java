@@ -51,12 +51,24 @@ public class PropertyContractPopulator {
     }
 
     private void assignApartmentToPropertyContract (Faker faker, List<Apartment> apartments, PropertyContract propertyContract) {
+        if (apartments == null || apartments.isEmpty()) {
+            throw new IllegalArgumentException("Apartments list must not be empty.");
+        }
         Apartment apartment = apartments.get(faker.number().numberBetween(0, apartments.size()));
+        if (apartment == null) {
+            throw new IllegalArgumentException("Apartment must be persisted first.");
+        }
         apartment.addContracts(propertyContract);
     }
 
     private void assignOwnerToPropertyContract (Faker faker, List<Owner> owners, PropertyContract propertyContract) {
+        if (owners == null || owners.isEmpty()) {
+            throw new IllegalArgumentException("Owners list must not be empty.");
+        }
         Owner owner = owners.get(faker.number().numberBetween(0, owners.size()));
+        if (owner == null) {
+            throw new IllegalArgumentException("Owner must be persisted first.");
+        }
         owner.addContracts(propertyContract);
     }
 }

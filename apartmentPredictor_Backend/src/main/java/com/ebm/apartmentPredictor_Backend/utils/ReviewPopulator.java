@@ -51,12 +51,24 @@ public class ReviewPopulator {
     }
 
     private void assignReviewer(Faker faker, List<Reviewer> reviewers, Review review) {
+        if (reviewers == null || reviewers.isEmpty()) {
+            throw new IllegalArgumentException("Reviewers list must not be empty.");
+        }
         Reviewer reviewer = reviewers.get(faker.number().numberBetween(0, reviewers.size()));
+        if (reviewer == null) {
+            throw new IllegalArgumentException("Reviewer must be persisted first.");
+        }
         reviewer.addReview(review);
     }
 
     private void assignApartment (Faker faker, List<Apartment> apartments, Review review) {
+        if (apartments == null || apartments.isEmpty()) {
+            throw new IllegalArgumentException("Apartments list must not be empty.");
+        }
         Apartment apartment = apartments.get(faker.number().numberBetween(0, apartments.size()));
+        if (apartment == null) {
+            throw new IllegalArgumentException("Apartment must be persisted first.");
+        }
         apartment.addReview(review);
     }
 }
