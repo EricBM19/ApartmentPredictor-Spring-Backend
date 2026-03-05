@@ -1,5 +1,6 @@
 package com.ebm.apartmentPredictor_Backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -18,6 +19,7 @@ public class School {
     private boolean publicSchool;
 
     @ManyToMany (mappedBy = "schools", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Apartment> apartments = new HashSet<>();
 
     public School() {
