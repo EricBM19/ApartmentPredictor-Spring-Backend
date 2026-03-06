@@ -9,24 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/apartment")
+@RequestMapping("api/v1/apartments")
 public class ApartmentRestController {
 
     @Autowired
     ApartmentService apartmentService;
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<Apartment>> getAllApartments() {
         return ResponseEntity.ok(apartmentService.findAll());
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Apartment createApartment(@RequestBody Apartment apartment){
         return apartmentService.createApartment(apartment);
     }
 
-    @DeleteMapping("/deleteById")
-    public void deleteApartmentById(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public void deleteApartmentById(@PathVariable Long id){
         apartmentService.deleteApartment(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
+        Apartment apartmentUpdated = apartmentService.updateApartmentById(id, apartment);
+        return ResponseEntity.ok(apartmentUpdated);
     }
 }
