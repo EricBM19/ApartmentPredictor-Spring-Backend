@@ -14,6 +14,14 @@ public class ApartmentService {
     @Autowired
     ApartmentRepository apartmentRepository;
 
+    public Apartment findApartmentById(Long id) {
+        Optional<Apartment> apartmentOpt = apartmentRepository.findById(id);
+        if (apartmentOpt.isEmpty()) {
+            throw new RuntimeException("Apartment not found.");
+        }
+        return apartmentOpt.get();
+    }
+
     public List<Apartment> findAll() {
         List<Apartment> apartments = new ArrayList<>();
         apartmentRepository.findAll().forEach(apartments::add);

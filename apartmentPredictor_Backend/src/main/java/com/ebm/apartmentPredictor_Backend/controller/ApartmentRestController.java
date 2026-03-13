@@ -15,6 +15,12 @@ public class ApartmentRestController {
     @Autowired
     ApartmentService apartmentService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Apartment> findById(@PathVariable Long id) {
+        Apartment apartment = apartmentService.findApartmentById(id);
+        return ResponseEntity.ok(apartment);
+    }
+
     @GetMapping
     public ResponseEntity<List<Apartment>> getAllApartments() {
         return ResponseEntity.ok(apartmentService.findAll());
