@@ -2,6 +2,7 @@ package com.ebm.apartmentPredictor_Backend.service;
 
 import com.ebm.apartmentPredictor_Backend.model.Apartment;
 import com.ebm.apartmentPredictor_Backend.model.Review;
+import com.ebm.apartmentPredictor_Backend.model.School;
 import com.ebm.apartmentPredictor_Backend.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,16 @@ public class ApartmentService {
         Set<Review> reviews = apartmentOpt.get().getReviews();
 
         return reviews;
+    }
+
+    public Set<School> findAllSchools (Long id) {
+        Optional<Apartment> apartmentOpt = apartmentRepository.findById(id);
+        if (apartmentOpt.isEmpty()) {
+            throw new RuntimeException("Apartment not found.");
+        }
+        Set<School> schools = apartmentOpt.get().getSchools();
+
+        return schools;
     }
 
     public List<Apartment> findByBedrooms(int bedroomsNum) {

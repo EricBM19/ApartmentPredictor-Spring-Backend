@@ -2,6 +2,7 @@ package com.ebm.apartmentPredictor_Backend.controller;
 
 import com.ebm.apartmentPredictor_Backend.model.Apartment;
 import com.ebm.apartmentPredictor_Backend.model.Review;
+import com.ebm.apartmentPredictor_Backend.model.School;
 import com.ebm.apartmentPredictor_Backend.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,11 @@ public class ApartmentRestController {
     @GetMapping("/{id}/reviews")
     public ResponseEntity<Set<Review>> findAllReviews (@PathVariable Long id) {
         return ResponseEntity.ok(apartmentService.findAllReviews(id));
+    }
+
+    @GetMapping("/{id}/schools")
+    public ResponseEntity<Set<School>> findAllSchools (@PathVariable Long id) {
+        return ResponseEntity.ok(apartmentService.findAllSchools(id));
     }
 
     @GetMapping("/price-range")

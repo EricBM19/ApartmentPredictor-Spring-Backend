@@ -16,4 +16,10 @@ public class ServiceTests {
     {
         apartmentService.findAllReviews(5L);
     }
+
+    @Test
+    void testFindAllSchools ()
+    {
+        apartmentService.findAllSchools(5L);
+    }
 }
