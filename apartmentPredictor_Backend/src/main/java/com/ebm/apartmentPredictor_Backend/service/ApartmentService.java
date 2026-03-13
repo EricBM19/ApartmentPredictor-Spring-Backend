@@ -1,13 +1,12 @@
 package com.ebm.apartmentPredictor_Backend.service;
 
 import com.ebm.apartmentPredictor_Backend.model.Apartment;
+import com.ebm.apartmentPredictor_Backend.model.Review;
 import com.ebm.apartmentPredictor_Backend.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ApartmentService {
@@ -59,5 +58,23 @@ public class ApartmentService {
         existingApartment.setFurnishingStatus(newApartmentData.getFurnishingStatus());
 
         return apartmentRepository.save(existingApartment);
+    }
+
+    public List<Apartment> findByPriceBetween (Long minPrice, Long maxPrice) {
+        return apartmentRepository.findByPriceBetween(minPrice,maxPrice);
+    }
+
+    public Set<Review> findAllReviews (Long id) {
+        Optional<Apartment> apartmentOpt = apartmentRepository.findById(id);
+        if (apartmentOpt.isEmpty()) {
+            throw new RuntimeException("Apartment not found.");
+        }
+        Set<Review> reviews = apartmentOpt.get().getReviews();
+
+        return reviews;
+    }
+
+    public List<Apartment> findByBedrooms(int bedroomsNum) {
+        return apartmentRepository.findByBedrooms(bedroomsNum);
     }
 }
