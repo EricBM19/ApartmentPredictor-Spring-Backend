@@ -34,7 +34,7 @@ public class Apartment {
 
     @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
-            name = "apartment_school_joinTable",
+            name = "APARTMENT_SCHOOL_JOINTABLE",
             joinColumns = @JoinColumn(name = "apartment_id"),
             inverseJoinColumns = @JoinColumn(name = "school_id"))
     private Set<School> schools = new HashSet<>();
