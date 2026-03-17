@@ -2,9 +2,9 @@
 
 ## Product Goal
 
-The current goal of this project is to provide a REST endpoint that allows developers to automatically populate the database with realistic test data, including all related entities and their associations.
+The current goal of this project is to expose a functional REST API for managing aparments, including CRUD operations and querys, using Spring Boot, JPA and H2 database.
 
-The user can specify a numeric parameter representing the desired amount of generated data, enabling fast and consistent setup of the application for development and testing purposes.
+The API will be tested using Postman and the Service methods with @SpringBootTest.
 
 ## UML
 
@@ -288,8 +288,12 @@ public class PopulateDBController {
 
 - Implement service classes for business logic
 
-- Add additional RestControllers per entity
+- Add additional RestControllers for each main entity
 
 - Implement defensive programming practices
 
 - Explore more JPA inheritance strategies
+
+- Test the differents entities, classes and methods with @SpringBootTest and validate endpoints with Postman
+
+- Create new git branches to try the diferent query approaches
