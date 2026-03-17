@@ -22,4 +22,9 @@ public class ServiceTests {
     {
         apartmentService.findAllSchools(5L);
     }
+
+    @Test
+    void findBySchoolId() {
+        apartmentService.findBySchoolId(1L);
+    }
 }

@@ -66,4 +66,9 @@ public class ApartmentRestController {
     public ResponseEntity<List<Apartment>> findByBedrooms (@RequestParam int bedroomsNum) {
         return ResponseEntity.ok(apartmentService.findByBedrooms(bedroomsNum));
     }
+
+    @GetMapping("/by-school")
+    public ResponseEntity<List<Apartment>> findBySchoolId (@RequestParam Long schoolId) {
+        return ResponseEntity.ok(apartmentService.findBySchoolId(schoolId));
+    }
 }

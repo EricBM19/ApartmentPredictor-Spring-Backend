@@ -4,6 +4,7 @@ import com.ebm.apartmentPredictor_Backend.model.Apartment;
 import com.ebm.apartmentPredictor_Backend.model.Review;
 import com.ebm.apartmentPredictor_Backend.model.School;
 import com.ebm.apartmentPredictor_Backend.repository.ApartmentRepository;
+import com.ebm.apartmentPredictor_Backend.repository.SchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import java.util.*;
 public class ApartmentService {
     @Autowired
     ApartmentRepository apartmentRepository;
+
+    @Autowired
+    SchoolRepository schoolRepository;
 
     public Apartment findApartmentById(Long id) {
         Optional<Apartment> apartmentOpt = apartmentRepository.findById(id);
@@ -87,5 +91,12 @@ public class ApartmentService {
 
     public List<Apartment> findByBedrooms(int bedroomsNum) {
         return apartmentRepository.findByBedrooms(bedroomsNum);
+    }
+
+    public List<Apartment> findBySchoolId(Long schoolId) {
+        School school = schoolRepository.findById(schoolId)
+                .orElseThrow(() -> new RuntimeException("School not found"));
+
+        return apartmentRepository.findBySchoolsContaining(school);
     }
 }
