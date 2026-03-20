@@ -40,6 +40,7 @@ direction TB
 
     class Review {
         -Long id
+        -String title
         -String reviewText
         -int rating
         -LocalDate reviewDate
@@ -109,7 +110,7 @@ direction TB
 
 ## ApartmentPredictor-Spring-Backend Entities
 
-### Apartment (1.2)
+### Apartment (1.3)
 
 ```java
 @Entity
@@ -136,7 +137,7 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <PropertyContract> propertyContracts = new HashSet<>();
 
     @ManyToMany
@@ -164,7 +165,7 @@ public abstract class Person {
 }
 ```
 
-### Owner (1.2)
+### Owner (1.3)
 
 ```java
 @Entity
@@ -175,7 +176,7 @@ public class Owner extends Person {
     private String idLegalOwner;
     private LocalDate registrationDate;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PropertyContract> propertyContracts = new HashSet<>();
 }
 ```
@@ -195,7 +196,7 @@ public class Reviewer extends Person{
 }
 ```
 
-### Review (1.2)
+### Review (1.3)
 
 ```java
 @Entity
@@ -204,6 +205,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
     private String reviewText;
     private int rating;
     private LocalDate reviewDate;
@@ -219,7 +221,7 @@ public class Review {
     private Apartment apartment;
 ```
 
-### School (1.1)
+### School (1.2)
 
 ```java
 @Entity
@@ -235,6 +237,7 @@ public class School {
     private boolean publicSchool;
 
     @ManyToMany (mappedBy = "schools")
+    @JsonIgnore
     private Set<Apartment> apartments = new HashSet<>();
 }
 ```

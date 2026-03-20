@@ -44,8 +44,8 @@ class ApartmentPredictorBackendApplicationTests {
         Reviewer reviewer = new Reviewer("Jane", "Doe", "janed@email.com", 35, "New", 0, 4.0);
         reviewerRepository.save(reviewer);
 
-        Review review = new Review("7/10 too much water", 4, LocalDate.now(), reviewer);
-        Review review2 = new Review("Bad", 2, LocalDate.now(), reviewer);
+        Review review = new Review("Title card" , "7/10 too much water", 4, LocalDate.now(), reviewer);
+        Review review2 = new Review("Bad","Bad", 2, LocalDate.now(), reviewer);
 
         apartment.addReview(review);
         apartment.addReview(review2);
