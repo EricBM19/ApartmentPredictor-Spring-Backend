@@ -11,6 +11,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
     private String reviewText;
     private int rating;
     private LocalDate reviewDate;
@@ -28,7 +29,8 @@ public class Review {
     public Review() {
     }
 
-    public Review(String reviewText, int rating, LocalDate reviewDate, Reviewer reviewer) {
+    public Review(String title, String reviewText, int rating, LocalDate reviewDate, Reviewer reviewer) {
+        this.title = title;
         this.reviewText = reviewText;
         this.rating = rating;
         this.reviewDate = reviewDate;
@@ -37,6 +39,14 @@ public class Review {
 
     public Long getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getReviewText() {
@@ -83,6 +93,7 @@ public class Review {
     public String toString() {
         return "Review{" +
                 "id=" + id +
+                ", title='" + title + '\'' +
                 ", reviewText='" + reviewText + '\'' +
                 ", rating=" + rating +
                 ", reviewDate=" + reviewDate +

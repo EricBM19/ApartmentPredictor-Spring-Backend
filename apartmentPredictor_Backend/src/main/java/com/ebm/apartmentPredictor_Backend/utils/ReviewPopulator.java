@@ -36,6 +36,7 @@ public class ReviewPopulator {
 
         for (int i = 0; i < quantity; i++) {
             Review review = new Review();
+            review.setTitle(faker.book().title());
             review.setReviewText(faker.lorem().characters(50,200));
             review.setRating(faker.number().numberBetween(1,6));
             Date date = faker.date().past(3650, TimeUnit.DAYS);
