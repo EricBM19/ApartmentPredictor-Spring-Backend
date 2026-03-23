@@ -42,7 +42,7 @@ direction TB
         -Long id
         -String title
         -String reviewText
-        -int rating
+        -double rating
         -LocalDate reviewDate
         -String apartmentId
         -Reviewer reviewer
@@ -65,6 +65,7 @@ direction TB
         -int parking
         -String prefarea
         -String furnishingStatus
+        -double apartmentRating
         -List <Review> reviews
         -Set <School> schools
         -Set <PropertyContract> propertyContracts
@@ -74,6 +75,7 @@ direction TB
         -void removeSchool(School school)
         -void addPropertyContract(PropertyContract propertyContract)
         -void removePropertyContract(PropertyContract propertyContract)
+        -void calculateAverageRating()
     }
 
     class PropertyContract {
@@ -110,7 +112,7 @@ direction TB
 
 ## ApartmentPredictor-Spring-Backend Entities
 
-### Apartment (1.3)
+### Apartment (1.4)
 
 ```java
 @Entity
@@ -133,6 +135,7 @@ public class Apartment {
     private int parking;
     private String prefarea;
     private String furnishingStatus;
+    private double apartmentRating;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
@@ -140,10 +143,10 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <PropertyContract> propertyContracts = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "apartment_school_joinTable",
-            joinColumns = @JoinColumn(name = "aparment_id"),
+            joinColumns = @JoinColumn(name = "apartment_id"),
             inverseJoinColumns = @JoinColumn(name = "school_id"))
     private Set<School> schools = new HashSet<>();
 }
@@ -181,7 +184,7 @@ public class Owner extends Person {
 }
 ```
 
-### Reviewer (1.2)
+### Reviewer (1.3)
 
 ```java
 @Entity
@@ -192,11 +195,12 @@ public class Reviewer extends Person{
     private double averageRating;
 
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
 }
 ```
 
-### Review (1.3)
+### Review (1.4)
 
 ```java
 @Entity
@@ -207,18 +211,18 @@ public class Review {
     private Long id;
     private String title;
     private String reviewText;
-    private int rating;
+    private double rating;
     private LocalDate reviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewer_id", nullable = false)
-    @JsonIgnore
     private Reviewer reviewer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartment_id", nullable = false)
     @JsonIgnore
     private Apartment apartment;
+}
 ```
 
 ### School (1.2)
