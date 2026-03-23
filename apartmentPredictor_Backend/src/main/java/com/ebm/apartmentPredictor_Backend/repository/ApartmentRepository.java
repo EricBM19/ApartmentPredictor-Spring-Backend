@@ -14,4 +14,9 @@ public interface ApartmentRepository extends CrudRepository <Apartment, Long>, J
     List<Apartment> findByBedrooms (int bedroomsNum);
 
     List<Apartment> findBySchoolsContaining(School school);
+
+    Long countByAirconditioningAndParking(String airConditioning, int parkingNum);
+
+    Boolean existsByPriceBetweenAndAirconditioning(Long minPrice, Long maxPrice, String airConditioning);
+
 }

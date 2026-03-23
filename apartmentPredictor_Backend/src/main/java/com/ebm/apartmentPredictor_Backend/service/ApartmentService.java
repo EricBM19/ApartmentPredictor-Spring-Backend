@@ -93,6 +93,14 @@ public class ApartmentService {
         return apartmentRepository.findByBedrooms(bedroomsNum);
     }
 
+    public Long countByAirconditioningAndParking (String airConditioning, int parkingNum) {
+        return apartmentRepository.countByAirconditioningAndParking(airConditioning, parkingNum);
+    }
+
+    public Boolean existsByPriceBetweenAndAirconditioning(Long minPrice, Long maxPrice, String airConditioning) {
+        return apartmentRepository.existsByPriceBetweenAndAirconditioning(minPrice, maxPrice, airConditioning);
+    }
+
     public List<Apartment> findBySchoolId(Long schoolId) {
         School school = schoolRepository.findById(schoolId)
                 .orElseThrow(() -> new RuntimeException("School not found"));

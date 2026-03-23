@@ -57,6 +57,11 @@ public class ApartmentRestController {
         return ResponseEntity.ok(apartmentService.findAllSchools(id));
     }
 
+    @GetMapping("/by-school")
+    public ResponseEntity<List<Apartment>> findBySchoolId (@RequestParam Long schoolId) {
+        return ResponseEntity.ok(apartmentService.findBySchoolId(schoolId));
+    }
+
     @GetMapping("/price-range")
     public ResponseEntity<List<Apartment>> findByPriceBetween(@RequestParam Long minPrice,@RequestParam Long maxPrice) {
         return ResponseEntity.ok(apartmentService.findByPriceBetween(minPrice,maxPrice));
@@ -67,8 +72,18 @@ public class ApartmentRestController {
         return ResponseEntity.ok(apartmentService.findByBedrooms(bedroomsNum));
     }
 
-    @GetMapping("/by-school")
-    public ResponseEntity<List<Apartment>> findBySchoolId (@RequestParam Long schoolId) {
-        return ResponseEntity.ok(apartmentService.findBySchoolId(schoolId));
+    @GetMapping("/air-parking")
+    public ResponseEntity<Long> countByParking (@RequestParam String airConditioning, @RequestParam int parkingNum) {
+        return ResponseEntity.ok(apartmentService.countByAirconditioningAndParking(airConditioning, parkingNum));
+    }
+
+    @GetMapping("/price-air")
+    public ResponseEntity<String> existsByPriceBetweenAndAirconditioning (@RequestParam Long minPrice,@RequestParam Long maxPrice, @RequestParam String airConditioning) {
+        Boolean exists = apartmentService.existsByPriceBetweenAndAirconditioning(minPrice,maxPrice,airConditioning);
+
+        if (!exists) {
+            return ResponseEntity.ok("No apartments with air conditioning in your budget range");
+        }
+        return ResponseEntity.ok("Apartment found");
     }
 }
