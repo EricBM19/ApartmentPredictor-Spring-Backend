@@ -2,7 +2,9 @@ package com.ebm.apartmentPredictor_Backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +27,7 @@ public class Apartment {
     private int parking;
     private String prefarea;
     private String furnishingStatus;
+    private double apartmentRating;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
@@ -42,7 +45,7 @@ public class Apartment {
     public Apartment() {
     }
 
-    public Apartment(Long price, int area, int bedrooms, int bathrooms, int stories, String mainroad, String guestroom, String basement, String hotwater, String heating, String airconditioning, int parking, String prefarea, String furnishingStatus) {
+    public Apartment(Long price, int area, int bedrooms, int bathrooms, int stories, String mainroad, String guestroom, String basement, String hotwater, String heating, String airconditioning, int parking, String prefarea, String furnishingStatus, double apartmentRating) {
         this.price = price;
         this.area = area;
         this.bedrooms = bedrooms;
@@ -57,6 +60,7 @@ public class Apartment {
         this.parking = parking;
         this.prefarea = prefarea;
         this.furnishingStatus = furnishingStatus;
+        this.apartmentRating = apartmentRating;
     }
 
     public Long getId() {
@@ -175,6 +179,14 @@ public class Apartment {
         this.furnishingStatus = furnishingStatus;
     }
 
+    public double getApartmentRating() {
+        return apartmentRating;
+    }
+
+    public void setApartmentRating(double apartmentRating) {
+        this.apartmentRating = apartmentRating;
+    }
+
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -215,6 +227,18 @@ public class Apartment {
     public void removePropertyContract(PropertyContract propertyContract) {
         propertyContracts.remove(propertyContract);
         propertyContract.setApartment(null);
+    }
+
+    public void calculateAverageRating() {
+        Set<Review> apartmentReviews = this.getReviews();
+
+        double average = apartmentReviews.stream()
+                .map(Review::getRating)
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+
+        this.setApartmentRating(average);
     }
 
     @Override

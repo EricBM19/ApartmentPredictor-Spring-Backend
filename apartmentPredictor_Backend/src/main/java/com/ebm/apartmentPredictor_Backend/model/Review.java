@@ -13,7 +13,7 @@ public class Review {
     private Long id;
     private String title;
     private String reviewText;
-    private int rating;
+    private double rating;
     private LocalDate reviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,7 +28,7 @@ public class Review {
     public Review() {
     }
 
-    public Review(String title, String reviewText, int rating, LocalDate reviewDate, Reviewer reviewer) {
+    public Review(String title, String reviewText, double rating, LocalDate reviewDate, Reviewer reviewer) {
         this.title = title;
         this.reviewText = reviewText;
         this.rating = rating;
@@ -56,11 +56,11 @@ public class Review {
         this.reviewText = reviewText;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

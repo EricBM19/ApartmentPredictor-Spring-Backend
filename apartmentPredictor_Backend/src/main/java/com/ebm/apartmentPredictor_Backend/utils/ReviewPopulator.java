@@ -38,7 +38,9 @@ public class ReviewPopulator {
             Review review = new Review();
             review.setTitle(faker.book().title());
             review.setReviewText(faker.lorem().characters(50,200));
-            review.setRating(faker.number().numberBetween(1,6));
+            double rating = (faker.number().randomDouble(2, 10, 50) / 10.0);
+            rating = Math.round(rating * 100.0) / 100.0;
+            review.setRating(rating);
             Date date = faker.date().past(3650, TimeUnit.DAYS);
             LocalDate reviewDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             review.setReviewDate(reviewDate);
@@ -71,5 +73,6 @@ public class ReviewPopulator {
             throw new IllegalArgumentException("Apartment must be persisted first.");
         }
         apartment.addReview(review);
+        apartment.calculateAverageRating();
     }
 }
