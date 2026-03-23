@@ -18,7 +18,6 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewer_id", nullable = false)
-    @JsonIgnore
     private Reviewer reviewer;
 
     @ManyToOne(fetch = FetchType.LAZY)

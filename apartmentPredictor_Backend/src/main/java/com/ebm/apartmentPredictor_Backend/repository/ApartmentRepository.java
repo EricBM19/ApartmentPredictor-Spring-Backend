@@ -18,5 +18,4 @@ public interface ApartmentRepository extends CrudRepository <Apartment, Long>, J
     Long countByAirconditioningAndParking(String airConditioning, int parkingNum);
 
     Boolean existsByPriceBetweenAndAirconditioning(Long minPrice, Long maxPrice, String airConditioning);
-
 }

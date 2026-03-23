@@ -1,5 +1,6 @@
 package com.ebm.apartmentPredictor_Backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ public class Reviewer extends Person{
     private double averageRating;
 
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
 
     public Reviewer() {
