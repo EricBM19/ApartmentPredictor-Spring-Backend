@@ -46,6 +46,7 @@ public class PlainApartmentPopulator {
             plainApartment.setParking(faker.number().numberBetween(0,3));
             plainApartment.setPrefarea(faker.options().option("yes", "no"));
             plainApartment.setFurnishingStatus(faker.options().option("furnished", "semi-furnished", "unfurnished"));
+            plainApartment.setApartmentRating(0.0);
 
             generatedPlainApartments.add(plainApartment);
         }

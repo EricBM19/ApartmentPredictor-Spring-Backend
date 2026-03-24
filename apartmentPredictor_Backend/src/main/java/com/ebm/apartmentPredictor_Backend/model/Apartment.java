@@ -28,6 +28,8 @@ public class Apartment {
     private String prefarea;
     private String furnishingStatus;
     private double apartmentRating;
+    private double latitude;
+    private double longitude;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
@@ -45,7 +47,7 @@ public class Apartment {
     public Apartment() {
     }
 
-    public Apartment(Long price, int area, int bedrooms, int bathrooms, int stories, String mainroad, String guestroom, String basement, String hotwater, String heating, String airconditioning, int parking, String prefarea, String furnishingStatus, double apartmentRating) {
+    public Apartment(Long price, int area, int bedrooms, int bathrooms, int stories, String mainroad, String guestroom, String basement, String hotwater, String heating, String airconditioning, int parking, String prefarea, String furnishingStatus, double apartmentRating, double latitude, double longitude) {
         this.price = price;
         this.area = area;
         this.bedrooms = bedrooms;
@@ -61,6 +63,8 @@ public class Apartment {
         this.prefarea = prefarea;
         this.furnishingStatus = furnishingStatus;
         this.apartmentRating = apartmentRating;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Long getId() {
@@ -187,6 +191,22 @@ public class Apartment {
         this.apartmentRating = apartmentRating;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -259,6 +279,9 @@ public class Apartment {
                 ", parking=" + parking +
                 ", prefarea='" + prefarea + '\'' +
                 ", furnishingStatus='" + furnishingStatus + '\'' +
+                ", apartmentRating=" + apartmentRating +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

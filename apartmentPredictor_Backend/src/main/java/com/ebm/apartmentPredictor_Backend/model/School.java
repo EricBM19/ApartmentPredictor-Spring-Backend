@@ -17,6 +17,8 @@ public class School {
     private String location;
     private int rating;
     private boolean publicSchool;
+    private double latitude;
+    private double longitude;
 
     @ManyToMany (mappedBy = "schools", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -25,12 +27,14 @@ public class School {
     public School() {
     }
 
-    public School(String name, String type, String location, int rating, boolean publicSchool) {
+    public School(String name, String type, String location, int rating, boolean publicSchool, double latitude, double longitude) {
         this.name = name;
         this.type = type;
         this.location = location;
         this.rating = rating;
         this.publicSchool = publicSchool;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Long getId() {
@@ -77,6 +81,22 @@ public class School {
         this.publicSchool = publicSchool;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public Set<Apartment> getApartments() {
         return apartments;
     }
@@ -100,6 +120,8 @@ public class School {
                 ", location='" + location + '\'' +
                 ", rating=" + rating +
                 ", publicSchool=" + publicSchool +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }
