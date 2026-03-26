@@ -2,9 +2,7 @@
 
 ## Product Goal
 
-The current goal of this project is to expose a functional REST API for managing aparments, including CRUD operations and querys, using Spring Boot, JPA and H2 database.
-
-The API will be tested using Postman and the Service methods with @SpringBootTest.
+The goal of this project branch is to integrate OpenStreetMap and the GraphHopper dependency in order to implement methods for calculating distances and the fastest routes between two points on a map.
 
 ## UML
 
@@ -66,6 +64,8 @@ direction TB
         -String prefarea
         -String furnishingStatus
         -double apartmentRating
+        -private double latitude;
+        -private double longitude;
         -List <Review> reviews
         -Set <School> schools
         -Set <PropertyContract> propertyContracts
@@ -94,6 +94,8 @@ direction TB
         -String location
         -int rating
         -boolean isPublic
+        -private double latitude;
+        -private double longitude;
         -Set <Apartment> apartments
         -void addApartment(Apartment apartment)
         -void removeApartment(Apartment apartment)
@@ -112,7 +114,7 @@ direction TB
 
 ## ApartmentPredictor-Spring-Backend Entities
 
-### Apartment (1.4)
+### Apartment (1.5)
 
 ```java
 @Entity
@@ -136,6 +138,8 @@ public class Apartment {
     private String prefarea;
     private String furnishingStatus;
     private double apartmentRating;
+    private double latitude;
+    private double longitude;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set <Review> reviews = new HashSet<>();
@@ -225,7 +229,7 @@ public class Review {
 }
 ```
 
-### School (1.2)
+### School (1.3)
 
 ```java
 @Entity
@@ -239,6 +243,8 @@ public class School {
     private String location;
     private int rating;
     private boolean publicSchool;
+    private double latitude;
+    private double longitude;
 
     @ManyToMany (mappedBy = "schools")
     @JsonIgnore
