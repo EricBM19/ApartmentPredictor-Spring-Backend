@@ -17,7 +17,9 @@ public class School {
     private String location;
     private int rating;
     private boolean publicSchool;
+    @Column(nullable = true)
     private double latitude;
+    @Column(nullable = true)
     private double longitude;
 
     @ManyToMany (mappedBy = "schools", fetch = FetchType.LAZY)

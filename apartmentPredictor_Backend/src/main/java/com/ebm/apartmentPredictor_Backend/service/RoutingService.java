@@ -25,4 +25,18 @@ public class RoutingService {
 
         return response.getBest().getDistance();
     }
+
+    public double getWalkingTimeInMinutes(Apartment apartment, School school) {
+        GHRequest request = new GHRequest(apartment.getLatitude(),apartment.getLongitude(),
+                school.getLatitude(), school.getLongitude()).setProfile("foot");
+
+        GHResponse response = graphHopper.route(request);
+        if (response.hasErrors()) {
+            throw new RuntimeException(response.getErrors().toString());
+        }
+
+        long timeMs = response.getBest().getTime();
+
+        return (timeMs/1000.0)/60.0;
+    }
 }

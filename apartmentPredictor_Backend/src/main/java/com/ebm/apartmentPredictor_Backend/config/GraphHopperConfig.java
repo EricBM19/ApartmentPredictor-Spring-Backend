@@ -15,7 +15,7 @@ public class GraphHopperConfig {
     public GraphHopper graphHopper() {
         GraphHopper hopper = new GraphHopper();
 
-        hopper.setOSMFile("/data/cataluna-260323.osm.pbf");
+        hopper.setOSMFile("data/cataluna-260323.osm.pbf");
         hopper.setGraphHopperLocation("graph-cache");
 
         CustomModel customModel = new CustomModel();

@@ -28,7 +28,9 @@ public class Apartment {
     private String prefarea;
     private String furnishingStatus;
     private double apartmentRating;
+    @Column(nullable = true)
     private double latitude;
+    @Column(nullable = true)
     private double longitude;
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)

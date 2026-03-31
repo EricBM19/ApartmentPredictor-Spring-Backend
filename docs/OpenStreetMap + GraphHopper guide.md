@@ -37,7 +37,17 @@ public class GraphHopperConfig {
 
         hopper.setOSMFile("/data/cataluna-260323.osm.pbf");
         hopper.setGraphHopperLocation("graph-cache");
-        hopper.setProfiles(new Profile("foot").setWeighting("fastest"));
+
+        CustomModel customModel = new CustomModel();
+        customModel.setDistanceInfluence(1000.0);
+
+        customModel.addToSpeed(Statement.If("true", Statement.Op.LIMIT, "5"));
+
+        hopper.setProfiles(
+                new Profile("foot")
+                        .setWeighting("custom")
+                        .setCustomModel(customModel)
+        );
 
         hopper.importOrLoad();
 
@@ -56,14 +66,18 @@ public class GraphHopperConfig {
 
 - **.setGraphHopperLocation():** Specifies the folder where the routing graph will be stored. If the folder does not exist, GraphHopper creates it automatically. This method also allows that next time the app is started, loads the graph quickly instead of reprocess the entire map again (in case we have already created the graph).
 
+- **Custom model:** A GraphHopper configuration that customizes how routes are evaluated, allowing you to influence factors such as priority, speed, and access for different types of roads.
+
+- **.setDistanceInfluence:** Controls how much the distance affects the route calculation. A higher value makes the algorithm prioritize shorter routes, while a lower value gives more importance to speed or other factors.
+
+- **.addToSpeed:** Adjusts the speed used for specific road types or conditions, influencing how fast a segment is considered during route calculation.
+
 - **hopper.setProfiles():** Defines one or more routing profiles, which determine how routes are calculated for different types of movement (e.g., walking, driving, cycling).
+
+- **Statement.If("true", Statement.Op.LIMIT, "5"):** 
 
 - **"foot":** The name of the routing profile for pedestrians.
 
 - **.setWeighting():** Specifies how GraphHopper should calculate the route for the given profile, such as fastest, shortest, or most efficient path depending on the mode of travel.
 
 - **hopper.importOrLoad():** Processes the map file and generates the routing graph if it is the first time running. On subsequent runs, it loads the cached graph, avoiding the need to recreate it.
-
-
-
-
