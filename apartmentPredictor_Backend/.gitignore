@@ -33,4 +33,4 @@ build/
 .vscode/
 
 *.osm.pbf
-/graph-cache/
+apartmentPredictor_Backend/graph-cache/
