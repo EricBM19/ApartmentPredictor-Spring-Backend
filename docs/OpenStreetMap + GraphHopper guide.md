@@ -23,7 +23,7 @@ Next, we need to download the map file that we want to work with, in **.osm.pbf*
 
 We can obtain the map file from OpenStreetMap providers, such as [Geofabrik](https://download.geofabrik.de/).
 
-Then we will create our **GraphHopperConfig** class. 
+Then, we will create our **GraphHopperConfig** class. This class is responsible for configuring and initializing GraphHopper so that we can calculate routes using OpenStreetMap data.
 
 First, create a new package to store this class, in my case, **/config**,  and then create a new file named **GraphHopperConfig.java**.
 
@@ -81,3 +81,44 @@ public class GraphHopperConfig {
 - **.setWeighting():** Specifies how GraphHopper should calculate the route for the given profile, such as fastest, shortest, or most efficient path depending on the mode of travel.
 
 - **hopper.importOrLoad():** Processes the map file and generates the routing graph if it is the first time running. On subsequent runs, it loads the cached graph, avoiding the need to recreate it.
+
+Once we have created our **GraphHopperConfig** with a profile, we create our **RoutingService**, a Spring Boot service that contains methods to calculate distance and time using our GraphHopper instance.
+
+```java
+@Service
+public class RoutingService {
+
+    @Autowired
+    GraphHopper graphHopper;
+
+    public double getWalkingDistance(Apartment apartment, School school) {
+        GHRequest request = new GHRequest(apartment.getLatitude(),apartment.getLongitude(),
+                school.getLatitude(), school.getLongitude()).setProfile("foot");
+
+        GHResponse response = graphHopper.route(request);
+        if (response.hasErrors()) {
+            throw new RuntimeException(response.getErrors().toString());
+        }
+
+        return response.getBest().getDistance();
+    }
+
+    public double getWalkingTimeInMinutes(Apartment apartment, School school) {
+        GHRequest request = new GHRequest(apartment.getLatitude(),apartment.getLongitude(),
+                school.getLatitude(), school.getLongitude()).setProfile("foot");
+
+        GHResponse response = graphHopper.route(request);
+        if (response.hasErrors()) {
+            throw new RuntimeException(response.getErrors().toString());
+        }
+
+        long timeMs = response.getBest().getTime();
+
+        return (timeMs/1000.0)/60.0;
+    }
+}
+```
+
+We want to work with the GraphHopper instance we created in the previous step, so we inject it into our **@Service** using **@Autowired**, allowing us to use GraphHopper without creating a new instance manually in each service method.
+
+- **getWalkingDistance :** 
