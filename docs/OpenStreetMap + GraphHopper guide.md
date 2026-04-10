@@ -121,4 +121,68 @@ public class RoutingService {
 
 We want to work with the GraphHopper instance we created in the previous step, so we inject it into our **@Service** using **@Autowired**, allowing us to use GraphHopper without creating a new instance manually in each service method.
 
-- **getWalkingDistance :** 
+Inside our **RoutingService**, we find the methods used to calculate the time and distance between two locations in our map.
+
+**GHRequest:** It is the class that represents a route request in GraphHopper. It is used to define the route parameters you want to calculate, such as origin, destination, transport profile, etc.
+
+- **getWalkingDistance :** A method responsible for calculating the walking distance between an Apartment and a School. 
+  It creates and **GHRequest** using the latitude and longitude of both entities and sets the transport profile, indicating how the route should be calculated.
+  The request is sent to GraphHopper using the **route** method.
+  Finally, if no errors occur, the method returns the distance of the best route in meters.
+- **getWalkingTimeInMinutes:** A method responsible for calculating the walking time between an Apartment and a School.
+  It creates a **GHRequest** using the latitude and longitude of both entities and sets the transport profile, which defines how the route should be calculated.
+  The request is then sent to GraphHopper using the **route** method.  
+  Finally, if no errors occur, the method retrieves the travel time of the best route in milliseconds and converts it into minutes before returning the result.
+
+Both methods return a double.
+
+Once we have the **RoutingService** we inject it, thanks to @Autowired, on our **RoutingController**.
+
+```java
+@RestController
+@RequestMapping("api/v1/routing")
+public class RoutingController {
+
+    @Autowired
+    RoutingService routingService;
+
+    @GetMapping("/walking")
+    public Map<String, Object> getWalkingInfo(
+            @RequestParam double lat1,
+            @RequestParam double lon1,
+            @RequestParam double lat2,
+            @RequestParam double lon2
+    ) {
+        Apartment apartment = new Apartment();
+        apartment.setLatitude(lat1);
+        apartment.setLongitude(lon1);
+
+        School school = new School();
+        school.setLatitude(lat2);
+        school.setLongitude(lon2);
+
+        double distance = routingService.getWalkingDistance(apartment,school);
+        double time = routingService.getWalkingTimeInMinutes(apartment,school);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("distanceMeters", distance);
+        response.put("timeMinutes", time);
+
+        return response;
+    }
+}
+```
+
+The **RoutingController** is a REST controller responsible for exposing routing functionality through an HTTP API.  
+It provides endpoints to calculate walking distance and time between two geographical points.
+
+- **GET /api/v1/routing/walking:** This endpoint receives two geographic coordinates as request parameters: the origin (lat1, lon1) and the destination (lat2, lon2).
+  Then it calls the **RoutingService** to calculate: 
+  
+  - The walking distance in meters.
+  
+  - The walking time in minutes.
+  
+  Finally, it returns both values in a JSON response.
+
+This endpoint has been successfully tested with real data in Postman, as shown in the image: **postman getWalkingInfo**.
