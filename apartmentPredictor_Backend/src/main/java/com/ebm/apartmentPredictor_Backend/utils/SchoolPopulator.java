@@ -44,6 +44,8 @@ public class SchoolPopulator {
             school.setLocation(faker.address().streetAddress());
             school.setRating(faker.number().numberBetween(1,6));
             school.setPublicSchool(faker.bool().bool());
+            school.setLatitude(Double.parseDouble(faker.address().latitude().replace(",", ".")));
+            school.setLongitude(Double.parseDouble(faker.address().longitude().replace(",", ".")));
 
             generatedSchools.add(school);
         }

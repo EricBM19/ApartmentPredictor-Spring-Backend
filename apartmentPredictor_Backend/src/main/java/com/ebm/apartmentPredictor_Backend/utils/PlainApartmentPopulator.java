@@ -47,6 +47,8 @@ public class PlainApartmentPopulator {
             plainApartment.setPrefarea(faker.options().option("yes", "no"));
             plainApartment.setFurnishingStatus(faker.options().option("furnished", "semi-furnished", "unfurnished"));
             plainApartment.setApartmentRating(0.0);
+            plainApartment.setLatitude(Double.parseDouble(faker.address().latitude().replace(",", ".")));
+            plainApartment.setLongitude(Double.parseDouble(faker.address().longitude().replace(",", ".")));
 
             generatedPlainApartments.add(plainApartment);
         }
