@@ -2,7 +2,7 @@
 
 ## Product Goal
 
-The goal of this project branch is to integrate OpenStreetMap and the GraphHopper dependency in order to implement methods for calculating distances and the fastest routes between two points on a map.
+The goal of this project branch is to continue the backend by implementing the remaining Controllers and Services, and to refactor the existing codebase to improve structure and maintainability, using OpenCode AI as a development support tool.
 
 ## UML
 
