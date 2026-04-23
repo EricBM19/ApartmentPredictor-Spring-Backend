@@ -62,6 +62,7 @@ public class ReviewPopulator {
             throw new IllegalArgumentException("Reviewer must be persisted first.");
         }
         reviewer.addReview(review);
+        reviewer.calculateAverageRating();
     }
 
     private void assignApartment (Faker faker, List<Apartment> apartments, Review review) {

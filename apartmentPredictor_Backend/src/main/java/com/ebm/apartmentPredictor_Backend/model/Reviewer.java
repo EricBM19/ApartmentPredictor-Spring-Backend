@@ -66,6 +66,18 @@ public class Reviewer extends Person{
         review.setReviewer(null);
     }
 
+    public void calculateAverageRating() {
+        Set<Review> reviewerReviews = this.getReviews();
+
+        double average = reviewerReviews.stream()
+                .map(Review::getRating)
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0.0);
+
+        this.setAverageRating(average);
+    }
+
     @Override
     public String toString() {
         return "Reviewer{" +
